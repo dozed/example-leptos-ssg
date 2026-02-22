@@ -56,11 +56,11 @@ pub fn App() -> impl IntoView {
 }
 
 #[derive(Error, Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
-pub enum PersonPageError {
-    #[error("Invalid person ID.")]
+pub enum BookPageError {
+    #[error("Invalid book ID.")]
     InvalidId,
     #[error("Post not found.")]
-    PersonNotFound,
+    BookNotFound,
     #[error("Server error: {0}.")]
     ServerError(String),
 }
@@ -77,7 +77,7 @@ fn BookPage() -> impl IntoView {
         query
             .get()
             .map(|q| q.book_id.unwrap_or_default())
-            .map_err(|_| PersonPageError::InvalidId)
+            .map_err(|_| BookPageError::InvalidId)
     };
 
     let book_resource = Resource::new_blocking(book_id, |book_id| async move {
@@ -94,7 +94,7 @@ fn BookPage() -> impl IntoView {
                 Ok(book_id) => Ok(view! {
                     <h1>Book {book_id.clone()}</h1>
                 }),
-                Err(e) => Err(PersonPageError::ServerError(e.to_string())),
+                Err(e) => Err(BookPageError::ServerError(e.to_string())),
             }
         })
     };
