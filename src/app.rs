@@ -59,7 +59,7 @@ pub fn App() -> impl IntoView {
 pub enum BookPageError {
     #[error("Invalid book ID.")]
     InvalidId,
-    #[error("Post not found.")]
+    #[error("Book not found.")]
     BookNotFound,
     #[error("Server error: {0}.")]
     ServerError(String),
